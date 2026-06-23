@@ -1719,6 +1719,35 @@ function mostrarToast(msg) {
   setTimeout(() => toast.classList.add('hidden'), 3000);
 }
 </script>
+    <!-- NOVO SCRIPT DOS DIAS -->
+    <script>
+      function atualizaDias() {
+        const mes = document.getElementById('inputMes').value;
+        const ano = document.getElementById('inputAno').value;
+        const diaSelect = document.getElementById('inputDia');
+        
+        if (!mes || mes === "Mes" || !ano || ano === "Ano") return;
+        
+        const diaAtual = diaSelect.value;
+        const totalDias = new Date(ano, parseInt(mes), 0).getDate();
+        
+        diaSelect.innerHTML = '<option value="">Dia</option>';
+        for (let i = 1; i <= totalDias; i++) {
+          const dia = i.toString().padStart(2, '0');
+          diaSelect.innerHTML += `<option value="${dia}">${dia}</option>`;
+        }
+        
+        if (parseInt(diaAtual) <= totalDias) {
+          diaSelect.value = diaAtual;
+        }
+      }
+
+      document.getElementById('inputMes').addEventListener('change', atualizaDias);
+      document.getElementById('inputAno').addEventListener('change', atualizaDias);
+      document.addEventListener('DOMContentLoaded', atualizaDias);
+    </script>
+    
+    <script>(function(){document.addEventListener("click"...
 <script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
 
 </body></html>
