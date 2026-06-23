@@ -1115,15 +1115,26 @@ function validarDepositoTipo(tipo, campoAlterado = null) {
     const erroP = document.querySelector(`.erroCampo[data-tipo="${tipo}"][data-campo="${campo}"]`);
     let valor = parseFloat(input.value) || 0;
     
-    if (campo !== 'Gramas_Larvicida' && valor > encontrados) {
-      input.value = encontrados;
-      valor = encontrados;
-      input.classList.add('input-error');
-      if (erroP) {
-        erroP.textContent = `Máx: ${encontrados}`;
-        erroP.classList.remove('hidden');
-      }
-      temErro = true;
+    if (campo !== 'Gramas_Larvicida' && campo !== 'Litros' && valor > encontrados) {
+    input.value = encontrados;
+    input.classList.add('input-error');
+    if (erroP) {
+      erroP.textContent = `Máx: ${encontrados}`;
+      erroP.classList.remove('hidden');
+    }
+    temErro = true;
+}
+
+// Validação específica pro campo Litros
+if (campo === 'Litros' && valor > 0 && valor < 1) {
+    input.classList.add('input-error');
+    if (erroP) {
+      erroP.textContent = "Mínimo: 1 litro";
+      erroP.classList.remove('hidden');
+    }
+    temErro = true;
+}
+    
       if (campo === 'Inspecionados') {
         atualizarNaoInspecionados(tipo);
       }
