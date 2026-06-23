@@ -1109,17 +1109,33 @@ function validarDepositoTipo(tipo, campoAlterado = null) {
   const foco = document.querySelector(`[data-tipo="${tipo}"][data-campo="Foco"]`);
   const litros = document.querySelector(`[data-tipo="${tipo}"][data-campo="Litros"]`);
   
-  [inspecionados, tratados, foco, litros].forEach(input => {
+  [inspecionados, tratados, foco, litros].filter(Boolean).forEach(input => {
     if (!input || input.disabled) return;
     const campo = input.dataset.campo;
     const erroP = document.querySelector(`.erroCampo[data-tipo="${tipo}"][data-campo="${campo}"]`);
     let valor = parseFloat(input.value) || 0;
     
-    if (campo !== 'Gramas_Larvicida' && campo !== 'Litros' && valor > encontrados) {
+   if (campo !== 'Gramas_Larvicida' && campo !== 'Litros' && valor > encontrados) {
     input.value = encontrados;
     input.classList.add('input-error');
     if (erroP) {
       erroP.textContent = `Máx: ${encontrados}`;
+      erroP.classList.remove('hidden');
+    }
+    temErro = true;
+    if (campo === 'Inspecionados') {
+        atualizarNaoInspecionados(tipo);
+    }
+} else {
+    input.classList.remove('input-error');
+    if (erroP) erroP.classList.add('hidden');
+}
+
+// Validação específica pro campo Litros
+if (campo === 'Litros' && valor > 0 && valor < 1) {
+    input.classList.add('input-error');
+    if (erroP) {
+      erroP.textContent = "Mínimo: 1 litro";
       erroP.classList.remove('hidden');
     }
     temErro = true;
@@ -1131,6 +1147,9 @@ if (campo === 'Litros' && valor > 0 && valor < 1) {
     if (erroP) {
       erroP.textContent = "Mínimo: 1 litro";
       erroP.classList.remove('hidden');
+    }
+    temErro = true;
+}
     }
     temErro = true;
 }
