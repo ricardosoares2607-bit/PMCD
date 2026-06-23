@@ -1110,7 +1110,7 @@ function validarDepositoTipo(tipo, campoAlterado = null) {
   const litros = document.querySelector(`[data-tipo="${tipo}"][data-campo="Litros"]`);
   
   [inspecionados, tratados, foco, litros].filter(Boolean).forEach(input => {
-    if (!input || input.disabled) return;
+    if (input.disabled) return;
     const campo = input.dataset.campo;
     const erroP = document.querySelector(`.erroCampo[data-tipo="${tipo}"][data-campo="${campo}"]`);
     let valor = parseFloat(input.value) || 0;
